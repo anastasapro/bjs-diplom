@@ -2,23 +2,22 @@
 const logoutButton = new LogoutButton();
 logoutButton.action = () => ApiConnector.logout(response => {
   if (response.success)
-    location.reload();
+  location.reload();
 });
 
 ApiConnector.current(response => {
   if (response.success) {
-    ProfileWidget.showProfile(response.data);
+  ProfileWidget.showProfile(response.data);
   }
 });
 
 const ratesBoard = new RatesBoard();
 const ratesRequest = () => 
 ApiConnector.getStocks(response => {
-  console.log(response);
-	if (response.success) {
-	ratesBoard.clearTable();
-	ratesBoard.fillTable(response.data);
-	}
+  if (response.success) {
+  ratesBoard.clearTable();
+  ratesBoard.fillTable(response.data);
+  }
 });
 ratesRequest();
 setInterval(ratesRequest, 60000);
@@ -28,28 +27,28 @@ moneyManager.addMoneyCallback = data =>
 ApiConnector.addMoney(data, response => {
   if (response.success) { 
     ProfileWidget.showProfile(response.data);
-	moneyManager.setMessage(false, "счет успешно пополнен");
-} else 
+    moneyManager.setMessage(false, "счет успешно пополнен");
+  } else 
     moneyManager.setMessage(true, response.data);  
-  });
+});
 
 moneyManager.conversionMoneyCallback = data =>
 ApiConnector.convertMoney(data, response => {
   if (response.success) {
     ProfileWidget.showProfile(response.data);
-	moneyManager.setMessage(false, "конвертация выполнена");
-} else 
+    moneyManager.setMessage(false, "конвертация выполнена");
+  } else 
     moneyManager.setMessage(true, response.data);  
-  });
+});
 
 moneyManager.sendMoneyCallback = data =>
 ApiConnector.transferMoney(data, response =>{
   if (response.success) {
     ProfileWidget.showProfile(response.data);
 	moneyManager.setMessage(false, "перевод успешно выполнен");
-} else 
+  } else 
     moneyManager.setMessage(true, response.data);  
-  });
+});
   
 const favoritesWidget = new FavoritesWidget();
 ApiConnector.getFavorites(response => {
@@ -67,8 +66,7 @@ ApiConnector.addUserToFavorites(data, response => {
 	favoritesWidget.fillTable(response.data);
 	moneyManager.updateUsersList(response.data);
 	favoritesWidget.setMessage(false, "пользователь успешно добавлен");
-}
-  else
+  } else
 	favoritesWidget.setMessage(true, response.data);
 });
 
@@ -79,8 +77,7 @@ ApiConnector.removeUserFromFavorites(data, response => {
 	favoritesWidget.fillTable(response.data);
 	moneyManager.updateUsersList(response.data);
 	favoritesWidget.setMessage(false, "пользователь успешно удален");
-  }
-  else
+  } else
 	favoritesWidget.setMessage(true, response.data);
 });
 
